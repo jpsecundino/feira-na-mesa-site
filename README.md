@@ -1,2 +1,3 @@
-# feira-na-mesa-site
-Repo do site do feiranamesa
+# Feira Na Mesa
+Repositório do site do Feira na Mesa. Utilizado para controlar/auditar nosso código.
+Como diria Ayrton Senna: "Gui Gay".
