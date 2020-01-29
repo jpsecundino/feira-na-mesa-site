@@ -1,12 +1,33 @@
 version: "3.3"
 
 services:
+  database:
+    image: mysql
+    container_name: db-con
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./server/db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: guigay
+      MYSQL_DATABASE: feira
+  adminer:
+    image: adminer
+    container_name: adminer-con
+    restart: always
+    ports:
+      - 8080:8080
   node-server:
     build: "./server"
     container_name: node-con
+    restart: always
     command: npm start
     volumes:
       - ./server:/usr/app
     ports:
       - "4000:4000"
-    # restart: always
+    environment: 
+      NODE_ENV: development
+      DB_CONNECTION_STRING: database    # CloudSQL IṔ -> 35.231.163.112
+    depends_on: 
+      - database

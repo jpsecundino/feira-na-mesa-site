@@ -1,2 +1,6 @@
+Dockerfile
+README.md
 node_modules
 .vscode
+npm-debug.log
+db

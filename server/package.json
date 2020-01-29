@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Feira na Mesa site server",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,11 +12,14 @@
   "author": "Feira Na Mesa",
   "license": "ISC",
   "dependencies": {
+    "apollo-datasource": "^0.6.4",
     "apollo-server": "^2.9.16",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "graphql": "^14.5.8",
-    "mongoose": "^5.8.9",
-    "nodemon": "^2.0.2"
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.2",
+    "sequelize": "^5.21.3"
   }
 }
