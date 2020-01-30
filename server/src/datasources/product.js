@@ -1,9 +1,9 @@
 const { DataSource } = require('apollo-datasource');
 
 class ProductAPI extends DataSource {
-  constructor({ store }) {
+  constructor(db) {
     super();
-    this.store = store;
+    this.db = db;
   }
 
   /**
@@ -16,16 +16,16 @@ class ProductAPI extends DataSource {
   }
 
   async getAllProducts() { 
-    const response = await this.store.Product.findAll();
+    const response = await this.db.Product.findAll();
     return response ? response : [];
   }
 
   async getProductByID({ productID }) {
-    return await this.store.Product.findByPk(productID);
+    return await this.db.Product.findByPk(productID);
   }
 
   async getWeekProducts() { 
-    const response = await this.store.Product.findAll({
+    const response = await this.db.Product.findAll({
       where: {
         thisWeek: true,
       }

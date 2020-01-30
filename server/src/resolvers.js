@@ -15,7 +15,7 @@ module.exports = {
       return weekProducts.reverse();
     },
     user: async (_, { id }, { dataSources }) => 
-      await dataSources.UserAPI.getUserbyID({ userID: id }),
+      await dataSources.userAPI.getUserByID({ userID: id }),
   },
 
   Mutation: {

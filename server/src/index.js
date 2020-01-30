@@ -2,17 +2,15 @@ const { ApolloServer } = require('apollo-server');
 
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers')
-const { createStore } = require('./utils');
+const db = require('./models/index.js');  // Sequelize connection
 
 const ProductAPI = require('./datasources/product');
-
-// Creates a sequelize connection once. NOT for every request
-const store = createStore();
+const UserAPI = require('./datasources/user');
 
 // Set up any dataSources our resolvers need
 const dataSources = () => ({
-  productAPI: new ProductAPI({ store }),
-  userAPI: new UserAPI({ store }),
+  productAPI: new ProductAPI(db),
+  userAPI: new UserAPI(db),
 });
 
 // Set up Apollo Server
@@ -35,8 +33,8 @@ module.exports = {
   resolvers,
   ApolloServer,
   ProductAPI,
-  store,
+  db,
   server,
 };
 
-// IP adress of db: 35.231.163.112
+// IP adress of cloud db: 35.231.163.112
