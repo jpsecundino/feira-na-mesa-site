@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { createTestData } = require('./indata');
 
 module.exports.paginateResults = ({
   after: cursor,
@@ -34,27 +35,25 @@ module.exports.createStore = () => {
     dialect: 'mysql',
     logging: false,
     define: {
-      paranoid: true
+      paranoid: true,
+      timestamps: true
     },
   });
 
+  // Note: using `force: true` will drop the table if it already exists
+  sequelize.sync({ force: true })
+    .then(() => {
+      return createTestData();
+    });
+
   const Product = sequelize.define('product', {
-    id: {
-      type: Sequelize.INTEGER,
-      field: 'productID',
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
     name: {
       type: Sequelize.STRING,
-      field: 'productName',
       allowNull: false,
     },
     price: Sequelize.FLOAT,
     photo: {
       type: Sequelize.STRING(512),
-      field: 'photoPath',
       allowNull: false,
     },
     description: Sequelize.TEXT,
@@ -62,9 +61,23 @@ module.exports.createStore = () => {
       type: Sequelize.BOOLEAN,
       allowNull: false,
     }
-  }, {
-    timestamps: false,
   });
-  
-  return { Product };
+
+  const User = sequelize.define('user', {
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    phone: Sequelize.STRING(64),
+    adress: Sequelize.STRING(512),
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    // Relational content
+    // An user has a history of purchase requests
+    // and furthermore...
+  });
+
+  return { Product, User };
 };

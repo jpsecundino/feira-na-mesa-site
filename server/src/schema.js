@@ -29,10 +29,10 @@ const typeDefs = gql`
 
   type User {
     id: ID!
-    name: String
+    name: String!
     phoneNumber: String
     adress: String
-    email: String
+    email: String!
     cart: Cart
   }
 

@@ -14,7 +14,8 @@ module.exports = {
       // We want these in reverse chronological order
       return weekProducts.reverse();
     },
-    user: async (_, {id}, { dataSources }) => await dataSources.UserAPI.getUserbyID(),
+    user: async (_, { id }, { dataSources }) => 
+      await dataSources.UserAPI.getUserbyID({ userID: id }),
   },
 
   Mutation: {

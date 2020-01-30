@@ -12,6 +12,7 @@ const store = createStore();
 // Set up any dataSources our resolvers need
 const dataSources = () => ({
   productAPI: new ProductAPI({ store }),
+  userAPI: new UserAPI({ store }),
 });
 
 // Set up Apollo Server
