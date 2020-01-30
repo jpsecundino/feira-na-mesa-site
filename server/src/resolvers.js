@@ -14,13 +14,13 @@ module.exports = {
       // We want these in reverse chronological order
       return weekProducts.reverse();
     },
-    user: () => console.log("Not implemented yet :("),
+    user: async (_, {id}, { dataSources }) => await dataSources.UserAPI.getUserbyID(),
   },
 
-  Mutation: { 
+  Mutation: {
     addProduct: () => console.log("Not implemented yet :("),
     removeProduct: () => console.log("Not implemented yet :("),
     addToWeekProducts: () => console.log("Not implemented yet :("),
     removeFromWeekProducts: () => console.log("Not implemented yet :("),
-  }, 
+  },
 };
