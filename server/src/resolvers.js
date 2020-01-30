@@ -7,8 +7,13 @@ module.exports = {
       // We want these in reverse chronological order
       return allProducts.reverse();
     },
-    product: () => console.log("Not implemented yet :("),
-    weekProducts: () => console.log("Not implemented yet :("),
+    product: async (_, { id }, { dataSources }) => 
+      await dataSources.productAPI.getProductByID({ productID: id }),
+    weekProducts: async (_, __, { dataSources }) => {
+      const weekProducts = await dataSources.productAPI.getWeekProducts();
+      // We want these in reverse chronological order
+      return weekProducts.reverse();
+    },
     user: () => console.log("Not implemented yet :("),
   },
 

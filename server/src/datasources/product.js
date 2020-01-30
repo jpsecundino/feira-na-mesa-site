@@ -19,6 +19,19 @@ class ProductAPI extends DataSource {
     const response = await this.store.Product.findAll();
     return response ? response : [];
   }
+
+  async getProductByID({ productID }) {
+    return await this.store.Product.findByPk(productID);
+  }
+
+  async getWeekProducts() { 
+    const response = await this.store.Product.findAll({
+      where: {
+        thisWeek: true,
+      }
+    });
+    return response ? response : [];
+  }
 }
 
 module.exports = ProductAPI;
