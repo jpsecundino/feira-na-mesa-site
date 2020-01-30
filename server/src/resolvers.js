@@ -7,15 +7,20 @@ module.exports = {
       // We want these in reverse chronological order
       return allProducts.reverse();
     },
-    product: () => console.log("Not implemented yet :("),
-    weekProducts: () => console.log("Not implemented yet :("),
-    user: () => console.log("Not implemented yet :("),
+    product: async (_, { id }, { dataSources }) => 
+      await dataSources.productAPI.getProductByID({ productID: id }),
+    weekProducts: async (_, __, { dataSources }) => {
+      const weekProducts = await dataSources.productAPI.getWeekProducts();
+      // We want these in reverse chronological order
+      return weekProducts.reverse();
+    },
+    user: async (_, {id}, { dataSources }) => await dataSources.UserAPI.getUserbyID(),
   },
 
-  Mutation: { 
+  Mutation: {
     addProduct: () => console.log("Not implemented yet :("),
     removeProduct: () => console.log("Not implemented yet :("),
     addToWeekProducts: () => console.log("Not implemented yet :("),
     removeFromWeekProducts: () => console.log("Not implemented yet :("),
-  }, 
+  },
 };
