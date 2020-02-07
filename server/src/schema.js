@@ -28,39 +28,64 @@ const typeDefs = gql`
   }
 
   type User {
-    id: ID!
-    name: String!
-    phone: String
-    adress: String
+    cpf: ID!
+    firstName: String!
+    lastName: String!
     email: String!
-    cart: Cart
+    adress: House!
+    phoneNumber: String!
   }
 
   type Product {
     id: ID!
     name: String!
-    price: Float
-    photo: String!
+    weight: Float
+    price: Float!
+    producer: [Producer]!
     description: String
     thisWeek: Boolean!
+    photo: String!
   }
 
-  type Basket {
-    size: BasketSize!
-    price: Float!
-    products: [Product]!
-  }
-
-  type Cart {
+  type Producer {
+    cpf: ID!
+    firstName: String!
+    lastName: String!
+    email: String
+    adress: String
+    phoneNumber1: String!
+    phoneNumber2: String
     products: [Product]
-    baskets: [Basket]
-    value: Float
   }
 
-  enum BasketSize {
-    SMALL
-    MEDIUM
-    LARGE
+  type Order {
+    id: ID!
+    byUser: User!
+    totalValue: Float!
+    hasBasket: Boolean!
+    basketType: String
+    paymentMethod: String!
+    paymentState: Boolean!
+    deliveryAdress: House!
+  }
+
+  type House {
+    id: ID!
+    adress: String!
+    houseNumber: Integer!
+    city: String!
+    district: String!
+    complement: String!
+    cep: Integer!
+    resident: User!
+  }
+
+  type OrderLine {
+    id: ID!
+    associatedOrder: Order!
+    associatedProduct: Product!
+    productQty: Float!
+    totalValue: Float!
   }
 `;
 
