@@ -71,10 +71,10 @@ const typeDefs = gql`
     phoneNumber1: String!
     phoneNumber2: String
     products: [Product]
-    salesMade: [Order]
+    # salesMade: [Order] # Does this even make sense?
   }
 
-  type Adress {
+  type Address {
     id: ID!
     street: String!
     district: String!
@@ -83,6 +83,7 @@ const typeDefs = gql`
     cep: String!
     city: String!
     resident: User!
+    description: String
   }
 
   type Order {
