@@ -1,7 +1,8 @@
 const { ApolloServer } = require('apollo-server');
+
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
-const db = require('./models/index.js');  // Sequelize connection
+const db = require('./models/index');  // Sequelize connection
 
 const ProductAPI = require('./datasources/product');
 const UserAPI = require('./datasources/user');
