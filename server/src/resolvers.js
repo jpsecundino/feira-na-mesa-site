@@ -8,15 +8,21 @@ module.exports = {
       // We want these in reverse chronological order
       return allProducts.reverse();
     },
-    product: async (_, { id }, { dataSources }) => 
+    product: async (_, { id }, { dataSources }) =>
     await dataSources.productAPI.getProductByID(id),
     weekProducts: async (_, __, { dataSources }) => {
       const weekProducts = await dataSources.productAPI.getWeekProducts();
       // We want these in reverse chronological order
       return weekProducts.reverse();
     },
-    user: async (_, { cpf }, { dataSources }) => 
+    user: async (_, { cpf }, { dataSources }) =>
     await dataSources.userAPI.getUserByCPF(cpf),
+    producers: async (_, __, { dataSources }) => {
+      const allProducers = await dataSources.producerAPI.getAllProducers();
+      // We want these in reverse chronological order
+      return allProducers.reverse();
+    },
+
   },
   Mutation: {
     addProduct: () => console.log("Not implemented yet :("),
