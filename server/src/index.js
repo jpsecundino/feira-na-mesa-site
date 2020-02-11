@@ -6,7 +6,8 @@ const db = require('./models/index');  // Sequelize connection
 
 const ProductAPI = require('./datasources/product');
 const UserAPI = require('./datasources/user');
-const nodemailer = require('nodemailer'); 
+const ProducerAPI = require('./datasources/producer');
+const nodemailer = require('nodemailer');
 
 // Set up any dataSources our resolvers need
 const dataSources = () => ({
@@ -25,7 +26,7 @@ const transporter = nodemailer.createTransport({
 
 // Set up Apollo Server
 const server = new ApolloServer({
-  typeDefs, 
+  typeDefs,
   resolvers,
   dataSources,
   // context, (not yet; we will only put it when we add the login feature)
