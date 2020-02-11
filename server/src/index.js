@@ -14,7 +14,7 @@ const dataSources = () => ({
 });
 
 // Nodemailer transporter
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'feiranamesaorganicos@gmail.com',

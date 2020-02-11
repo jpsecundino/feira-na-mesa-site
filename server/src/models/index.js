@@ -13,6 +13,15 @@ const sequelize = new Sequelize('feira', 'root', 'guigay', {
   },
 });
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
 // Connect all the models/tables in the database to a db object, 
 //so everything is accessible via one object
 const db = {};
@@ -29,16 +38,16 @@ db.Order = sequelize.import(__dirname + '/order.js');
 db.OrderLine = sequelize.import(__dirname + '/orderLine.js');
 
 //Relations
-db.User.hasMany(db.Address);
-db.User.hasMany(db.Order);
-db.Product.belongsToMany(db.Producer, {through: 'ProductRelation'});
-db.Producer.hasMany(db.Address);
-db.Producer.hasMany(db.Product);
-db.Address.belongsTo(db.User);
-db.Order.belongsTo(db.User);
-db.Order.hasMany(db.OrderLine);
-db.Order.hasOne(db.Address);
-db.OrderLine.hasMany(db.Product);
+//db.User.hasMany(db.Address);
+//db.User.hasMany(db.Order);
+//db.Product.belongsToMany(db.Producer, {through: 'ProductRelation'});
+//db.Producer.hasMany(db.Address);
+//db.Producer.hasMany(db.Product);
+//db.Address.belongsTo(db.User);
+//db.Order.belongsTo(db.User);
+//db.Order.hasMany(db.OrderLine);
+//db.Order.hasOne(db.Address);
+//db.OrderLine.hasMany(db.Product);
 
 // Note: using `force: true` will drop the table if it already exists
 sequelize.sync({ force: true })

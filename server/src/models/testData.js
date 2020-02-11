@@ -10,6 +10,7 @@ module.exports.createTestData = (db) => {
 
   db.Product.create({ 
     name: "Chicória",
+    unitOfMeasure: 'Maço',
     price: 3.00,
     photo: 'usr/photos/chicoria.jpg',
     thisWeek: true,
@@ -17,24 +18,29 @@ module.exports.createTestData = (db) => {
   
   db.Product.create({ 
     name: "Berinjela",
+    unitOfMeasure: 'Unidade',
     price: 4.50,
     photo: 'usr/photos/berinjela.jpg',
     description: 'Uma deliciosa berinjela, que tem ótimas propriedades nutritivas',
     thisWeek: true,
   });
 
-  db.User.create({ 
-    name: "João Ramos",
+  db.User.create({
+    cpf: '48068865712',
+    firstName: "João Vitor",
+    lastName: "Silva Ramos",
     email: "joaoramosj@usp.br",
     adress: 'Fernandópolis',
-    phone: '(19) 97343-2312',
+    phoneNumber1: '(19) 97343-2312',
   });
 
-  db.User.create({ 
-    name: "Vitor Santana",
+  db.User.create({
+    cpf: '49067975624',
+    firstName: "Vitor",
+    lastName: "Santana Cordeiro",
     email: "vitorsan@usp.br",
     adress: 'Taboão da Serra',
-    phone: '(11) 93578-2379',
+    phoneNumber1: '(11) 99473-8372',
   });
 
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> All test data successfully created! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");

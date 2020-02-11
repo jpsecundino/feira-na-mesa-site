@@ -1,5 +1,5 @@
 # Database
-db/
+db/*
 
 # VS Code
 .vscode/*
