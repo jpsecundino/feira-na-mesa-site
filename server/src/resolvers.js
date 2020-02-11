@@ -1,3 +1,4 @@
+const { transporter } = require('./index');
 const { paginateResults } = require('./utils');
 
 module.exports = {
@@ -8,14 +9,14 @@ module.exports = {
       return allProducts.reverse();
     },
     product: async (_, { id }, { dataSources }) => 
-      await dataSources.productAPI.getProductByID({ productID: id }),
+      await dataSources.productAPI.getProductByID(id),
     weekProducts: async (_, __, { dataSources }) => {
       const weekProducts = await dataSources.productAPI.getWeekProducts();
       // We want these in reverse chronological order
       return weekProducts.reverse();
     },
-    user: async (_, { id }, { dataSources }) => 
-      await dataSources.userAPI.getUserByID({ userID: id }),
+    user: async (_, { cpf }, { dataSources }) => 
+      await dataSources.userAPI.getUserByCPF(cpf),
   },
 
   Mutation: {

@@ -1,16 +1,25 @@
 const { ApolloServer } = require('apollo-server');
-
 const typeDefs = require('./schema');
-const resolvers = require('./resolvers')
+const resolvers = require('./resolvers');
 const db = require('./models/index.js');  // Sequelize connection
 
 const ProductAPI = require('./datasources/product');
 const UserAPI = require('./datasources/user');
+const nodemailer = require('nodemailer'); 
 
 // Set up any dataSources our resolvers need
 const dataSources = () => ({
   productAPI: new ProductAPI(db),
   userAPI: new UserAPI(db),
+});
+
+// Nodemailer transporter
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'feiranamesaorganicos@gmail.com',
+    pass: process.env.EMAIL_PASSWORD,
+  }
 });
 
 // Set up Apollo Server
@@ -35,6 +44,5 @@ module.exports = {
   ProductAPI,
   db,
   server,
+  transporter,
 };
-
-// IP adress of cloud db: 35.231.163.112

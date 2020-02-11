@@ -16,8 +16,8 @@ class UserAPI extends DataSource {
     this.context = config.context;
   }
 
-  async getUserByID({ userID }) {
-    return await this.db.User.findByPk(userID);
+  async getUserByCPF(cpf) {
+    return await this.db.User.findByPk(cpf);
   }
 }
 

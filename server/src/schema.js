@@ -5,7 +5,7 @@ const typeDefs = gql`
     products: [Product]!
     product(id: ID!): Product
     weekProducts: [Product]
-    user(id: ID!): User
+    user(cpf: String!): User
   }
 
   type Mutation {
@@ -21,71 +21,87 @@ const typeDefs = gql`
     removeFromWeekProducts(id: ID!): ProductUpdateResponse!
   }
 
-  type ProductUpdateResponse {
+  interface MutationResponse {
+    code: String! # HTTP Status Code
     success: Boolean!
-    message: String
+    message: String!
+  }
+
+  type ProductUpdateResponse implements MutationResponse {
+    code: String! # HTTP Status Code
+    success: Boolean!
+    message: String!
     products: [Product] # It's good practice for a mutation to return whatever objects it modifies so the requesting client can update its cache and UI without needing to make a followup query.
   }
 
   type User {
-    cpf: ID!
+    cpf: String!  # User identifier
     firstName: String!
     lastName: String!
     email: String!
-    adress: House!
-    phoneNumber: String!
+    photo: String
+    deliveryAdresses: [Address]!
+    phoneNumber1: String!
+    phoneNumber2: String
+    orders: [Order]
+    totalSpent: Float
   }
 
   type Product {
     id: ID!
     name: String!
-    weight: Float
-    price: Float!
-    producer: [Producer]!
+    unitOfMeasure: String!
+    price: Float! # Per unit of measure
     description: String
-    thisWeek: Boolean!
     photo: String!
+    producer: [Producer]!
+    thisWeek: Boolean!
   }
 
   type Producer {
-    cpf: ID!
+    id: ID!
+    cpf: String  # Another identifier
+    cnpj: String # Just in case he/she has one
     firstName: String!
     lastName: String!
     email: String
-    adress: String
+    photo: String
+    history: String
+    adresses: [Address]!
     phoneNumber1: String!
     phoneNumber2: String
     products: [Product]
+    salesMade: [Order]
+  }
+
+  type Adress {
+    id: ID!
+    street: String!
+    district: String!
+    houseNumber: String!
+    complement: String!
+    cep: String!
+    city: String!
+    resident: User!
   }
 
   type Order {
     id: ID!
-    byUser: User!
+    owner: User!
+    lines: [OrderLine]!
     totalValue: Float!
-    hasBasket: Boolean!
-    basketType: String
     paymentMethod: String!
-    paymentState: Boolean!
-    deliveryAdress: House!
+    paid: Boolean!
+    deliveryAdress: Address!
+    failed: Boolean!
   }
 
-  type House {
+  type OrderLine {  # A number of baskets or products of the same type
     id: ID!
-    adress: String!
-    houseNumber: Integer!
-    city: String!
-    district: String!
-    complement: String!
-    cep: Integer!
-    resident: User!
-  }
-
-  type OrderLine {
-    id: ID!
-    associatedOrder: Order!
-    associatedProduct: Product!
-    productQty: Float!
-    totalValue: Float!
+    isBasket: Boolean!
+    productOrBasket: [Product]!
+    quantity: Int!
+    value: Float!
   }
 `;
 

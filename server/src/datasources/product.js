@@ -20,7 +20,7 @@ class ProductAPI extends DataSource {
     return response ? response : [];
   }
 
-  async getProductByID({ productID }) {
+  async getProductByID(productID) {
     return await this.db.Product.findByPk(productID);
   }
 

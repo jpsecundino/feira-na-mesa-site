@@ -1,17 +1,24 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  const Product = sequelize.define('Product', {
+  const Product = sequelize.define('product', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    price: DataTypes.FLOAT,
+    unitOfMeasure: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    description: DataTypes.TEXT,
     photo: {
       type: DataTypes.STRING(512),
       allowNull: false,
     },
-    description: DataTypes.TEXT,
     thisWeek: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
