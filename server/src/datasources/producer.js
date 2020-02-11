@@ -1,4 +1,5 @@
 const { DataSource } = require('apollo-datasource');
+const { Op } = require('sequelize');
 
 class ProducerAPI extends DataSource {
   constructor(db) {
@@ -19,3 +20,17 @@ class ProducerAPI extends DataSource {
     const response = await this.db.Producer.findAll();
     return response ? response : [];
   }
+
+  async getProducerByCPFOrCNPJ({ CPF, CNPJ }) {
+    return await this.db.Producer.findOne({
+      where: {
+        [Op.or]: [
+          { cpf: CPF },
+          { cnpj: CNPJ }
+        ]
+      }
+    });
+  }
+}
+
+module.exports = ProducerAPI;

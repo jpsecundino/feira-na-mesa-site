@@ -49,7 +49,7 @@ db.Order.hasMany(db.OrderLine);
 db.Order.hasOne(db.Address);
 db.OrderLine.hasMany(db.Product);
 
-// Note: using `force: true` will drop the table if it already exists
+// 'force: true' will drop every table and reconstruct them again.
 sequelize.sync({ force: true })
   .then(() => {
     return createTestData(db);

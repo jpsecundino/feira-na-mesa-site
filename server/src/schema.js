@@ -5,7 +5,10 @@ const typeDefs = gql`
     products: [Product]!
     product(id: ID!): Product
     weekProducts: [Product]
+    users: [User]!
     user(cpf: String!): User
+    producers: [Producer]!
+    producer(cpf: String, cnpj: String): Producer
   }
 
   type Mutation {

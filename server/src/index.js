@@ -7,12 +7,14 @@ const db = require('./models/index');  // Sequelize connection
 const ProductAPI = require('./datasources/product');
 const UserAPI = require('./datasources/user');
 const ProducerAPI = require('./datasources/producer');
+
 const nodemailer = require('nodemailer');
 
 // Set up any dataSources our resolvers need
 const dataSources = () => ({
   productAPI: new ProductAPI(db),
   userAPI: new UserAPI(db),
+  producerAPI: new ProducerAPI(db),
 });
 
 // Nodemailer transporter
