@@ -1,6 +1,27 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  scalar ConstraintString
+  scalar ConstraintNumber
+  
+  directive @constraint(
+    # String constraints
+    minLength: Int
+    maxLength: Int
+    startsWith: String
+    endsWith: String
+    notContains: String
+    pattern: String
+    format: String
+
+    # Number constraints
+    min: Int
+    max: Int
+    exclusiveMin: Int
+    exclusiveMax: Int
+    multipleOf: Int
+  ) on FIELD_DEFINITION
+
   type Query {
     products: [Product]!
     product(id: ID!): Product
@@ -38,53 +59,53 @@ const typeDefs = gql`
   }
 
   type User {
-    cpf: String!  # User identifier
-    firstName: String!
-    lastName: String!
-    email: String!
-    photo: String
-    deliveryAdresses: [Address]!
-    phoneNumber1: String!
-    phoneNumber2: String
+    cpf: String! @constraint(maxLength: 11)   # User identifier
+    firstName: String! @constraint(pattern: "^[0-9a-zA-Z]*$", maxLength: 255)
+    lastName: String! @constraint(pattern: "^[0-9a-zA-Z]*$", maxLength: 255)
+    email: String! @constraint(format: "email", maxLength: 255)
+    photo: String @constraint(maxLength: 255)
+    deliveryAdresses: [Address]! 
+    phoneNumber1: String! @constraint(maxLength: 64)
+    phoneNumber2: String @constraint(maxLength: 64)
     orders: [Order]
-    totalSpent: Float
+    totalSpent: Float @constraint(min: 0)
   }
 
   type Product {
     id: ID!
-    name: String!
-    unitOfMeasure: String!
+    name: String! @constraint(maxLength: 255)
+    unitOfMeasure: String! @constraint(maxLength: 255)
     price: Float! # Per unit of measure
     description: String
-    photo: String!
+    photo: String! @constraint(maxLength: 512)
     producer: [Producer]!
     thisWeek: Boolean!
   }
 
   type Producer {
     id: ID!
-    cpf: String  # Another identifier
-    cnpj: String # Just in case he/she has one
-    firstName: String!
-    lastName: String!
-    email: String
-    photo: String
-    history: String
+    cpf: String @constraint(maxLength: 11)   # Another identifier
+    cnpj: String @constraint(maxLength: 14)   # Just in case he/she has one
+    firstName: String! @constraint(maxLength: 255)
+    lastName: String! @constraint(maxLength: 255)
+    email: String @constraint(format: "email", maxLength: 255)
+    photo: String @constraint(maxLength: 255)
+    history: String 
     adresses: [Address]!
-    phoneNumber1: String!
-    phoneNumber2: String
+    phoneNumber1: String! @constraint(maxLength: 64)
+    phoneNumber2: String @constraint(maxLength: 64)
     products: [Product]
     # salesMade: [Order] # Does this even make sense?
   }
 
   type Address {
     id: ID!
-    street: String!
-    district: String!
-    houseNumber: String!
-    complement: String!
-    cep: String!
-    city: String!
+    street: String! @constraint(maxLength: 255)
+    district: String! @constraint(maxLength: 255)
+    houseNumber: String! @constraint(maxLength: 5)
+    complement: String! @constraint(maxLength: 255)
+    cep: String! @constraint(maxLength: 8)
+    city: String! @constraint(maxLength: 255)
     resident: User!
     description: String
   }
@@ -93,8 +114,8 @@ const typeDefs = gql`
     id: ID!
     owner: User!
     lines: [OrderLine]!
-    totalValue: Float!
-    paymentMethod: String!
+    totalValue: Float! @constraint(min: 0)
+    paymentMethod: String! @constraint(maxLength: 255)
     paid: Boolean!
     deliveryAdress: Address!
     failed: Boolean!
@@ -104,8 +125,8 @@ const typeDefs = gql`
     id: ID!
     isBasket: Boolean!
     productOrBasket: [Product]!
-    quantity: Int!
-    value: Float!
+    quantity: Int! @constraint(min: 1)
+    value: Float! @constraint(min: 0)
   }
 `;
 

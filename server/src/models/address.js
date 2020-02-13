@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     houseNumber: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(5),
       allowNull: false,
     },
     complement: {
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     cep: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(8),
       allowNull: false,
     },
     city: {
