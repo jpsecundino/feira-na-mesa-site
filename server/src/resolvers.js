@@ -26,6 +26,7 @@ module.exports = {
       return allProducers.reverse();
     },
     producer: async (_, { cpf, cnpj }, { dataSources }) => await dataSources.producerAPI.getProducerByCPFOrCNPJ({ CPF: cpf, CNPJ: cnpj }),
+    producerByID: async (_, { id }, { dataSources }) => await dataSources.producerAPI.getProducerByID(id),
   },
   Mutation: {
     addProduct: () => console.log("Not implemented yet :("),

@@ -1,6 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "private": true,
   "description": "Feira na Mesa site server",
   "main": "src/index.js",
   "scripts": {
@@ -8,7 +9,12 @@
     "start": "nodemon ./src/index.js",
     "start:ci": "node ./src/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "Node",
+    "Apollo",
+    "Server",
+    "GraphQL"
+  ],
   "author": "Feira Na Mesa",
   "license": "ISC",
   "dependencies": {

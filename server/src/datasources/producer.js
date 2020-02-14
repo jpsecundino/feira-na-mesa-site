@@ -21,6 +21,10 @@ class ProducerAPI extends DataSource {
     return response ? response : [];
   }
 
+  async getProducerByID(producerID) {
+    return await this.db.Producer.findByPk(producerID);
+  }
+
   async getProducerByCPFOrCNPJ({ CPF, CNPJ }) {
     return await this.db.Producer.findOne({
       where: {

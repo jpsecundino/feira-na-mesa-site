@@ -20,27 +20,9 @@ const dataSources = () => ({
   producerAPI: new ProducerAPI(db),
 });
 
-// Nodemailer transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'feiranamesaorganicos@gmail.com',
-    pass: process.env.EMAIL_PASSWORD,
-  }
-});
-
-const complexityLimitRule = createComplexityLimitRule(2000, {
-  scalarCost: 1,
-  objectCost: 10, // Default is 0.
-  listFactor: 20, // Default is 10.
-});
-
-// Set up Apollo Server
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources,
-  context: ({ req }) => {
+// Sets up the global context for each resolver, using the req
+/*
+const context = async ({ req }) => {
     // get the user token from the headers
     const token = req.headers.authorization || '';
    
@@ -53,18 +35,44 @@ const server = new ApolloServer({
    
     // add the user to the context
     return { user };
-  },
+};
+*/
+
+// Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'feiranamesaorganicos@gmail.com',
+    pass: process.env.EMAIL_PASSWORD,
+  }
+});
+
+const complexityLimitRule = createComplexityLimitRule(2000, {
+  scalarCost: 1,
+  objectCost: 10,
+  listFactor: 20,
+});
+
+// How Apollo server will format errors to the client
+const formatError = (err) => {
+  if (err.message.startsWith('Database Error: ')) {
+    return new Error('Internal server error');  // Suppress details of db errors, which increase security
+  }
+  return err;
+};
+
+// Set up Apollo Server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  dataSources,
+  //context,
   introspection: process.env.NODE_ENV !== 'production',
   validationRules: [depthLimit(7), complexityLimitRule],
   schemaDirectives: {
     constraint: ConstraintDirective,
   },
-  formatError: (err) => {
-    if (err.message.startsWith('Database Error: ')) {
-      return new Error('Internal server error');
-    }
-    return err;
-  },
+  formatError,
 });
 
 server
