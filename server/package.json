@@ -9,12 +9,6 @@
     "start": "nodemon ./src/index.js",
     "start:ci": "node ./src/index.js"
   },
-  "keywords": [
-    "Node",
-    "Apollo",
-    "Server",
-    "GraphQL"
-  ],
   "author": "Feira Na Mesa",
   "license": "ISC",
   "dependencies": {
